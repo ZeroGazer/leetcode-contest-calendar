@@ -1,0 +1,43 @@
+name: GitHub Actions
+run-name: Generate and deploy ICS
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Setup Yarn environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+      - name: Install dependency
+        run: yarn install
+      - run: echo "Build script"
+      - run: yarn run build
+      - run: echo "Generate ICS file"
+      - run: yarn run run
+      - name: Update pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: _site/
+          retention-days: 3
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

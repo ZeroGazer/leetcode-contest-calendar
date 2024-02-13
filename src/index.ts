@@ -1,5 +1,5 @@
 import ical, {ICalCalendarMethod, ICalEventTransparency} from 'ical-generator';
-import {writeFileSync} from 'fs';
+import {mkdirSync, writeFileSync} from 'fs';
 
 (async () => {
   const contests = await fetchContests();
@@ -21,7 +21,9 @@ import {writeFileSync} from 'fs';
       transparency: ICalEventTransparency.OPAQUE
     })
   }
-  writeFileSync('./leetcode-contest-calendar.ics', calendar.toString());
+
+  mkdirSync('./_site/');
+  writeFileSync('./_site/leetcode-contest-calendar.ics', calendar.toString());
 })();
 
 async function fetchContests() {
