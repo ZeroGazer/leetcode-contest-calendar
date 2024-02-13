@@ -1,0 +1,20 @@
+{
+  "name": "leetcode-contest-calendar",
+  "version": "1.0.0",
+  "description": "Generate LeetCode contest calendar in ICS format",
+  "main": "./src/index.ts",
+  "author": "Alex Poon <6593392+ZeroGazer@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --build",
+    "run": "node ./dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "ical-generator": "^6.0.1"
+  }
+}
