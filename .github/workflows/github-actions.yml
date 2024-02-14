@@ -1,6 +1,7 @@
 name: GitHub Actions
 run-name: Generate and deploy ICS
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
 jobs:
