@@ -1,4 +1,4 @@
-name: GitHub Actions
+name: Generate and deploy ICS
 run-name: Generate and deploy ICS
 on:
   workflow_dispatch:
@@ -20,11 +20,11 @@ jobs:
           cache-dependency-path: 'yarn.lock'
       - name: Install dependency
         run: yarn install
-      - run: echo "Build script"
-      - run: yarn run build
-      - run: echo "Generate ICS file"
-      - run: yarn run run
-      - name: Update pages artifact
+      - name: Build script
+        run: yarn run build
+      - name: Generate ICS file
+        run: yarn run run
+      - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site/
