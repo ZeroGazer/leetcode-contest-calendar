@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Generate LeetCode contest calendar in ICS format",
   "main": "./src/index.ts",
+  "type": "module",
   "author": "Alex Poon <6593392+ZeroGazer@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {

@@ -1,30 +1,28 @@
 import ical, {ICalCalendarMethod, ICalEventTransparency} from 'ical-generator';
 import {mkdirSync, writeFileSync} from 'fs';
 
-(async () => {
-  const contests = await fetchContests();
+const contests = await fetchContests();
 
-  const calendar = ical({
-    name: 'LeetCode Contest Calendar',
-    method: ICalCalendarMethod.REQUEST
-  });
-  for (const contest of contests.slice(0, 10)) {
-    calendar.createEvent({
-      id: contest.titleSlug,
-      start: new Date(contest.startTime * 1000),
-      end: new Date((contest.startTime + contest.duration) * 1000),
-      summary: `[LeetCode] - ${contest.title}`,
-      location: `https://leetcode.com/contest/${contest.titleSlug}`,
-      alarms: [{
-        triggerBefore: 1800
-      }],
-      transparency: ICalEventTransparency.OPAQUE
-    })
-  }
+const calendar = ical({
+  name: 'LeetCode Contest Calendar',
+  method: ICalCalendarMethod.REQUEST
+});
+for (const contest of contests.slice(0, 10)) {
+  calendar.createEvent({
+    id: contest.titleSlug,
+    start: new Date(contest.startTime * 1000),
+    end: new Date((contest.startTime + contest.duration) * 1000),
+    summary: `[LeetCode] - ${contest.title}`,
+    location: `https://leetcode.com/contest/${contest.titleSlug}`,
+    alarms: [{
+      triggerBefore: 1800
+    }],
+    transparency: ICalEventTransparency.OPAQUE
+  })
+}
 
-  mkdirSync('./_site/');
-  writeFileSync('./_site/leetcode-contest-calendar.ics', calendar.toString());
-})();
+mkdirSync('./_site/');
+writeFileSync('./_site/leetcode-contest-calendar.ics', calendar.toString());
 
 async function fetchContests() {
   const response = await fetch('https://leetcode.com/graphql', {
